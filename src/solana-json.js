@@ -8,7 +8,7 @@ const BufferLayout = require('buffer-layout');
 const solanaJSON = {
 
 	setupConnection: (network) => {
-		const connection = new web3.Connection(network);
+		const connection = new web3.Connection(network, {disableRetryOnRateLimit: true});
 		return connection;
 	},
 
