@@ -7,5 +7,15 @@
     "@solana/web3.js": "^1.36.0",
     "buffer-layout": "^1.2.2",
     "dotenv": "^16.0.0"
+  },
+  "scripts": {
+    "fund_me": "NODE_PATH=. node src/fund_me.js",
+    "1_send_sol_to_program_account": "NODE_PATH=. node src/1_send_sol_to_program_account.js",
+    "2_program_info": "NODE_PATH=. node src/2_program_info.js",
+    "3_program_add_app_account": "NODE_PATH=. node src/3_program_add_app_account.js",
+    "4_program_write": "NODE_PATH=. node src/4_program_write.js",
+    "5_program_read": "NODE_PATH=. node src/5_program_read.js",
+    "6_program_reallocate": "NODE_PATH=. node src/6_program_reallocate.js"
+
   }
 }
