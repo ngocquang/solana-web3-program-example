@@ -18,7 +18,6 @@ const NETWORK = process.env.NETWORK;
   // Load User from private key
 
   const payerAccount = await solanaJSON.loadUser(PRIVATE_KEY);
-
   await solanaJSON.fundUser(connection,payerAccount.publicKey);
 
   console.log('Done');

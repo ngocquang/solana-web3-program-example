@@ -3,11 +3,15 @@
 ## Deploy
 
 ```shell
-# Generate key pair for my wallet
-solana-keygen new -o env/my_key.json
+# Generate seed phrase
+solana-keygen new --no-outfile
+# Generate key pair for my wallet, re-enter seed phrase
+solana-keygen recover 'prompt://?key=0/0' -o env/my_key.json
+
 # Add fund
 yarn fund_me
-yarn fund_me
+# or
+solana airdrop 1 -k env/my_key.json
 # Generate key pair for our Program Account
 solana-keygen new -o env/my_app_key.json
 
@@ -34,8 +38,15 @@ yarn 5_program_read
 
 ```shell
 # Generate new wallet
-solana-keygen new -o env/my_key.json
+solana-keygen new --no-outfile
+
+
+# Its key=0/0 means its derive path is m/44'/501'/0'/0'
+solana-keygen recover 'prompt://?key=0/0' -o env/my_key.json
+
+solana-keygen pubkey env/my_key.json
 
 # Add fund
 yarn fund_me
+
 ```
