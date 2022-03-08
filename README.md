@@ -6,14 +6,17 @@
 # Generate seed phrase
 solana-keygen new --no-outfile
 # Generate key pair for my wallet, re-enter seed phrase
-solana-keygen recover 'prompt://?key=0/0' -o env/my_key.json
+solana-keygen recover 'prompt://?key=0/0' -o env/my_key_2.json
 
 # Add fund
 yarn fund_me
 # or
 solana airdrop 1 -k env/my_key.json
-# Generate key pair for our Program Account
+solana airdrop 1 -k env/my_key_2.json
+# Generate key pair for our Program Execyte Account
 solana-keygen new -o env/my_app_key.json
+# Generate key pair for our Program Data Account
+solana-keygen new -o env/my_app_data_key.json
 
 # Deploy program with key pair
 solana program deploy --program-id env/my_app_key.json contract/solana-json.so -k env/my_key.json

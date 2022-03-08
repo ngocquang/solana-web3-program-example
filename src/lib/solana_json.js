@@ -4,11 +4,11 @@
 const web3 = require('@solana/web3.js');
 const fs = require('fs').promises;
 const BufferLayout = require('buffer-layout');
-
+const splToken = require("@solana/spl-token");
 const solanaJSON = {
 
 	setupConnection: (network) => {
-		console.log('Connecting to',network);
+		console.log('Connecting to', network);
 		const connection = new web3.Connection(web3.clusterApiUrl(network), 'confirmed');
 		return connection;
 	},
@@ -28,7 +28,7 @@ const solanaJSON = {
 	fundUser: async (connection, publicKey) => {
 		console.log(`Requesting airdrop funds... (this will take 30 seconds)`);
 		const airdropSignature = await connection.requestAirdrop(publicKey, web3.LAMPORTS_PER_SOL); // 1 SOL = 1,000,000,000 LAMPORTS
-		console.log('Waiting confirming... ',airdropSignature);
+		console.log('Waiting confirming... ', airdropSignature);
 		await connection.confirmTransaction(airdropSignature);
 		const lamports = await connection.getBalance(publicKey);
 		console.log(`Payer account ${publicKey.toBase58()} containing ${(lamports / web3.LAMPORTS_PER_SOL).toFixed(2)}SOL`);
@@ -133,7 +133,7 @@ const solanaJSON = {
 
 	pullJSON: async (connection, appPubKey) => {
 		const accountInfo = await connection.getAccountInfo(appPubKey);
-		return Buffer.from(accountInfo.data).toString().substr(4, 1000).trim();
+		return Buffer.from(accountInfo.data).toString().slice(4, 1000).trim();
 	},
 
 	deploy: async (network) => {
@@ -151,7 +151,37 @@ const solanaJSON = {
 		const testJSON = solanaJSON.pullJSON(connection, app.appAccount.publicKey);
 		console.log(`Test: ${JSON.parse(testJSON).abc}`);
 	},
+	transfer: async (tokenMintAddress, fromWallet, toAddress, connection, amount) => {
+		const mint = new web3.PublicKey(tokenMintAddress);
+		const toWalletPublicKey = new web3.PublicKey(toAddress);
 
+		// const mint = await splToken.getMint(connection, mintPublicKey, 'confirmed', splToken.TOKEN_PROGRAM_ID);
+
+		const fromTokenAccount = await splToken.getOrCreateAssociatedTokenAccount(
+			connection,
+			fromWallet,
+			mint,
+			fromWallet.publicKey
+		);
+
+		const toTokenAccount = await splToken.getOrCreateAssociatedTokenAccount(
+			connection,
+			fromWallet,
+			mint,
+			toWalletPublicKey
+		);
+
+		let signature = await splToken.transfer(
+			connection,
+			fromWallet,
+			fromTokenAccount.address,
+			toTokenAccount.address,
+			fromWallet.publicKey,
+			amount
+		);
+		return signature;
+
+	}
 }
 
 module.exports = solanaJSON;

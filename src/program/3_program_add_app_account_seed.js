@@ -3,7 +3,7 @@ const fs = require('fs').promises;
 require('dotenv').config({
   path: './.env'
 });
-const solanaJSON = require('./lib/solana_json.js');
+const solanaJSON = require('../lib/solana_json.js');
 
 const NETWORK = process.env.NETWORK;
 
@@ -14,6 +14,7 @@ const NETWORK = process.env.NETWORK;
     process.exit(1);
   }
   const PRIVATE_KEY_PROGRAM = JSON.parse(await fs.readFile('env/my_app_key.json'));
+  const PRIVATE_KEY_APP_DATA = JSON.parse(await fs.readFile('env/my_app_data_key.json'));
 
   // Connect to cluster
   const connection = solanaJSON.setupConnection(NETWORK);
@@ -27,7 +28,6 @@ const NETWORK = process.env.NETWORK;
   const GREETING_SIZE = 1000;
 
   const programIdPubKey = programAccount.publicKey;
-  // const appDataAccountPubkey = appDataAccount.publicKey;
   const appDataAccountPubkey = await web3.PublicKey.createWithSeed(
     payerAccount.publicKey,
     GREETING_SEED,
@@ -59,7 +59,7 @@ const NETWORK = process.env.NETWORK;
         programId: programIdPubKey,
       }),
     );
-    var signature = await web3.sendAndConfirmTransaction(connection, transaction, [payerAccount]);
+    var signature = await web3.sendAndConfirmTransaction(connection, transaction, [payerAccount, appDataAccount]);
     console.log('Waiting confirming... ',signature);
 		await connection.confirmTransaction(signature);
     appAccount = await connection.getAccountInfo(appDataAccountPubkey);

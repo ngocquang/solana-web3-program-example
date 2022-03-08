@@ -1,5 +1,5 @@
 const web3 = require('@solana/web3.js');
-const solanaJSON = require('./lib/solana_json.js');
+const solanaJSON = require('src/lib/solana_json.js');
 require('dotenv').config({ path: './.env' });
 const config = require('./config.js');
 const NETWORK = process.env.NETWORK;

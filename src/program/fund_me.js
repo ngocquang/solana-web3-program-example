@@ -1,4 +1,4 @@
-const solanaJSON = require('./lib/solana_json.js');
+const solanaJSON = require('src/lib/solana_json.js');
 const fs = require('fs').promises;
 
 require('dotenv').config({ path: './.env' });

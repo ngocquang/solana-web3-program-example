@@ -1,6 +1,6 @@
 
 require('dotenv').config({ path: './.env' })
-const solanaJSON = require('./lib/solana_json.js');
+const solanaJSON = require('src/lib/solana_json.js');
 const fs = require('fs').promises;
 
 const NETWORK = process.env.NETWORK;
