@@ -6,7 +6,7 @@
 # Generate seed phrase
 solana-keygen new --no-outfile
 # Generate key pair for my wallet, re-enter seed phrase
-solana-keygen recover 'prompt://?key=0/0' -o env/my_key_2.json
+solana-keygen recover 'prompt://?key=0/1' -o env/my_key_2.json
 
 # Add fund
 yarn fund_me

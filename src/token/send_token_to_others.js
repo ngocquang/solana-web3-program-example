@@ -24,9 +24,11 @@ const NETWORK = process.env.NETWORK;
   // Load User from private key
   const payerAccount = await solanaJSON.loadUser(PRIVATE_KEY);
   const toAccount = await solanaJSON.loadUser(PRIVATE_KEY_2);
-  const tokenMintAddress = "Ak5m5rVDXycixgUDy4KUQeTEhiwYfHk9pmgQdfNEzVZM";
+  // const tokenMintAddress = "Ak5m5rVDXycixgUDy4KUQeTEhiwYfHk9pmgQdfNEzVZM";
+  // const tokenMintAddress = "2tWC4JAdL4AxEFJySziYJfsAnW2MHKRo98vbAPiRDSk8"; // USDC (Saber Devnet)
+  const tokenMintAddress = "EJwZgeZrdC8TXTQbQBoL6bfuAnFUUy1PVCMB4DYPzVaS"; // USDT (Saber Devnet)
 
-  const amount = 1 * web3.LAMPORTS_PER_SOL;
+  const amount = 2 * web3.LAMPORTS_PER_SOL / 1000;
 
   console.log('Transfer from ',payerAccount.publicKey.toBase58());
   console.log('To',toAccount.publicKey.toBase58());
